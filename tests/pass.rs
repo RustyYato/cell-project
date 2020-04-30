@@ -1,3 +1,4 @@
+#![feature(raw_ref_op)]
 #![allow(unused)]
 
 use cell_project::cell_project as project;
@@ -12,7 +13,7 @@ mod a {
     }
 
     #[derive(Debug, PartialEq)]
-    pub struct Bar<T> {
+    pub struct Bar<T: ?Sized> {
         pub name: String,
         pub build: T,
     }
@@ -87,11 +88,25 @@ fn aliasing() {
 
     assert_eq!(build.get(), 0);
 
+    build.set(10);
+
     assert_eq!(
         Cell::into_inner(bar),
         a::Bar {
             name: "hello".to_string(),
-            build: 0
+            build: 10
         }
     )
+}
+
+#[test]
+#[cfg(feature = "nightly")]
+fn unsized_field() {
+    let bar = Cell::new(a::Bar {
+        name: String::new(),
+        build: [31, 12, 13, 41],
+    });
+
+    let bar: &Cell<a::Bar<[_]>> = &bar;
+    let build: &Cell<[_]> = cell_project::nightly_cell_project!(a::Bar<_>, bar.build);
 }
