@@ -19,4 +19,4 @@ nightly = []
 [dependencies]
 
 [dev-dependencies]
-trybuild = '*'
+trybuild = '1'
