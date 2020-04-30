@@ -23,7 +23,7 @@ The syntax for the macro is as follows
 
 ```rust compile_fail
 let projection = cp!($TypeOfValue, $value_identifier.$field_identifier);
-```rust
+```
 
 You may not pass an expression for `$value_identifier`, if you need to then you should do.
 
