@@ -4,26 +4,10 @@ error[E0277]: the size for values of type `[u8]` cannot be known at compilation 
 14 |     project!(Foo, cell.quax)
    |     ^^^^^^^^^^^^^^^^^^^^^^^^ doesn't have a size known at compile-time
    | 
-  ::: $WORKSPACE/src/lib.rs:9:33
+  ::: $WORKSPACE/src/macros.rs:7:44
    |
-9  | pub unsafe fn project_unchecked<T, F>(cell: &Cell<T>, field: *const F, offset: usize) -> &Cell<F> {
-   |                                 - required by this bound in `cell_project::project_unchecked`
-   |
-   = help: within `Foo`, the trait `std::marker::Sized` is not implemented for `[u8]`
-   = note: to learn more, visit <https://doc.rust-lang.org/book/ch19-04-advanced-types.html#dynamically-sized-types-and-the-sized-trait>
-   = note: required because it appears within the type `Foo`
-   = note: this error originates in a macro (in Nightly builds, run with -Z macro-backtrace for more info)
-
-error[E0277]: the size for values of type `[u8]` cannot be known at compilation time
-  --> $DIR/unsized.rs:14:5
-   |
-14 |     project!(Foo, cell.quax)
-   |     ^^^^^^^^^^^^^^^^^^^^^^^^ doesn't have a size known at compile-time
-   | 
-  ::: $WORKSPACE/src/lib.rs:9:36
-   |
-9  | pub unsafe fn project_unchecked<T, F>(cell: &Cell<T>, field: *const F, offset: usize) -> &Cell<F> {
-   |                                    - required by this bound in `cell_project::project_unchecked`
+7  | pub unsafe fn project_unchecked<T: ?Sized, F>(
+   |                                            - required by this bound in `cell_project::macros::project_unchecked`
    |
    = help: the trait `std::marker::Sized` is not implemented for `[u8]`
    = note: to learn more, visit <https://doc.rust-lang.org/book/ch19-04-advanced-types.html#dynamically-sized-types-and-the-sized-trait>
