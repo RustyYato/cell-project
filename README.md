@@ -2,6 +2,9 @@
 
 A safe interface to project through shared references to [`core::cell::Cell`](https://!doc.rust-lang.org/core/cell/struct.Cell.html).
 
+Documentation:
+https://docs.rs/cell-project
+
 ```rust
 use std::cell::Cell;
 use cell_project::cell_project as cp; // renamed for ergonomics
