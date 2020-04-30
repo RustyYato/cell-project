@@ -1,0 +1,9 @@
+error[E0505]: cannot move out of `foo` because it is borrowed
+  --> $DIR/use_after_free.rs:9:10
+   |
+8  |     let field = project!(Foo, foo.0);
+   |                 -------------------- borrow of `foo` occurs here
+9  |     drop(foo);
+   |          ^^^ move out of `foo` occurs here
+10 |     field.get();
+   |     ----- borrow later used here
