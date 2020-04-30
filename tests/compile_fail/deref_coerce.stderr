@@ -1,0 +1,5 @@
+error[E0026]: struct `Foo` does not have a field named `foo`
+  --> $DIR/deref_coerce.rs:26:24
+   |
+26 |     project!(Foo, cell.foo)
+   |                        ^^^ struct `Foo` does not have this field
