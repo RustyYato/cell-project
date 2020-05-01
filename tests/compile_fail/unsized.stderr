@@ -4,9 +4,9 @@ error[E0277]: the size for values of type `[u8]` cannot be known at compilation 
 14 |     project!(Foo, cell.quax)
    |     ^^^^^^^^^^^^^^^^^^^^^^^^ doesn't have a size known at compile-time
    | 
-  ::: $WORKSPACE/src/macros.rs:7:44
+  ::: $WORKSPACE/src/macros.rs:4:44
    |
-7  | pub unsafe fn project_unchecked<T: ?Sized, F>(
+4  | pub unsafe fn project_unchecked<T: ?Sized, F>(
    |                                            - required by this bound in `cell_project::macros::project_unchecked`
    |
    = help: the trait `std::marker::Sized` is not implemented for `[u8]`

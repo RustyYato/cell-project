@@ -138,7 +138,7 @@ macro_rules! nightly_cell_project {
             ref cell => unsafe {
                 let cell: &$crate::macros::Cell<$type> = cell;
                 let ptr = cell.as_ptr();
-                $crate::macros::nightly_project_unchecked(cell, &raw const (*ptr).$field, 0)
+                $crate::macros::nightly_project_unchecked(cell, &raw const (*ptr).$field)
             },
         }
     };
