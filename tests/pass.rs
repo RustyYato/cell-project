@@ -1,4 +1,4 @@
-#![feature(raw_ref_op)]
+#![cfg_attr(feature = "nightly", feature(raw_ref_op))]
 #![allow(unused)]
 
 use cell_project::cell_project as project;
