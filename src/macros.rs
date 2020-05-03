@@ -29,13 +29,13 @@ unsafe fn validate_fat_pointer_layout<T: ?Sized>(ptr: &mut *mut T) -> *mut *mut 
 }
 
 #[inline(always)]
-pub unsafe fn project_unchecked<T: ?Sized, F: ?Sized>(
-    cell: &Cell<T>,
-    field: *const F,
-) -> &Cell<F> {
+pub unsafe fn project_unchecked<T: ?Sized, F: ?Sized>(cell: &Cell<T>, field: *const F) -> &Cell<F> {
     let mut ptr = cell.as_ptr();
 
-    assert_eq!(core::alloc::Layout::new::<*mut T>(), core::alloc::Layout::new::<*mut F>());
+    assert_eq!(
+        core::alloc::Layout::new::<*mut T>(),
+        core::alloc::Layout::new::<*mut F>()
+    );
 
     validate_fat_pointer_layout(&mut ptr);
     validate_fat_pointer_layout(&mut (field as *mut F));
