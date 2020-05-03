@@ -52,8 +52,7 @@ fn get_x_cell<T>(point: &Cell<Pair<T>>) -> &Cell<T> {
 
 Some limitations, you cannot project an enum variant because that is potentially unsound.
 
-```rust compile_fail
-## cell_project::docs_example!{}
+```rust
 let x = Cell::new(Some(0));
 
 // let's imagine a macro like `try_cell_project`, which takes a varaint as well as a type
@@ -65,7 +64,7 @@ x.set(None); // we can still write to the `Cell` directly
 // and there is no way to fix this. Enums cannot allow safe projection through
 // a shared mutable reference (like `&Cell<_>`)
 let _ = proj.get();
-```rust
+```
 so you cannot project through enums
 
 Another limitation of stable, you can only project to `Sized` types. For example, if I have a type
