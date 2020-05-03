@@ -100,13 +100,77 @@ fn aliasing() {
 }
 
 #[test]
-#[cfg(feature = "nightly")]
-fn unsized_field() {
+fn slice_field() {
     let bar = Cell::new(a::Bar {
         name: String::new(),
         build: [31, 12, 13, 41],
     });
 
-    let bar: &Cell<a::Bar<[_]>> = &bar;
-    let build: &Cell<[_]> = cell_project::nightly_cell_project!(a::Bar<_>, bar.build);
+    {
+        let bar: &Cell<a::Bar<[_]>> = &bar;
+        let build: &Cell<[_]> = project!(a::Bar<_>, bar.build);
+
+        for item in build.as_slice_of_cells() {
+            item.set(0);
+        }
+    }
+
+    assert_eq!(
+        Cell::into_inner(bar),
+        a::Bar {
+            name: String::new(),
+            build: [0; 4],
+        }
+    );
+}
+
+#[test]
+fn trait_field() {
+    let bar = Cell::new(a::Bar {
+        name: String::new(),
+        build: [31, 12, 13, 41],
+    });
+
+    {
+        let bar: &Cell<a::Bar<[_]>> = &bar;
+        let build: &Cell<[_]> = project!(a::Bar<_>, bar.build);
+
+        for item in build.as_slice_of_cells() {
+            item.set(0);
+        }
+    }
+
+    assert_eq!(
+        Cell::into_inner(bar),
+        a::Bar {
+            name: String::new(),
+            build: [0; 4],
+        }
+    );
+}
+
+#[test]
+#[cfg(feature = "nightly")]
+fn nightly_unsized_field() {
+    let bar = Cell::new(a::Bar {
+        name: String::new(),
+        build: [31, 12, 13, 41],
+    });
+
+    {
+        let bar: &Cell<a::Bar<[_]>> = &bar;
+        let build: &Cell<[_]> = cell_project::nightly_cell_project!(a::Bar<_>, bar.build);
+
+        for item in build.as_slice_of_cells() {
+            item.set(0);
+        }
+    }
+
+    assert_eq!(
+        Cell::into_inner(bar),
+        a::Bar {
+            name: String::new(),
+            build: [0; 4],
+        }
+    );
 }
