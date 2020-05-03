@@ -29,7 +29,7 @@ unsafe fn validate_fat_pointer_layout<T: ?Sized>(ptr: &mut *mut T) -> *mut *mut 
 }
 
 #[inline(always)]
-pub unsafe fn project_unchecked<T: ?Sized, F>(
+pub unsafe fn project_unchecked<T: ?Sized, F: ?Sized>(
     cell: &Cell<T>,
     field: *const F,
 ) -> &Cell<F> {
