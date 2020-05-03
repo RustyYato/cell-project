@@ -119,7 +119,6 @@ macro_rules! cell_project {
                 let cell: &$crate::macros::Cell<$type> = cell;
                 let ptr = cell.as_ptr();
                 let $type { $field: field, .. } = &*ptr;
-                let field = field as *const _;
                 $crate::macros::project_unchecked(cell, field)
             },
         }
