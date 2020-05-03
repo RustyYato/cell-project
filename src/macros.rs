@@ -40,7 +40,12 @@ pub unsafe fn project_unchecked<T: ?Sized, F>(
     validate_fat_pointer_layout(&mut ptr);
     validate_fat_pointer_layout(&mut (field as *mut F));
 
+    // This dance of two copies is to maintain the providence of `Cell::as_ptr`
+    // this first copy shouldn't change the providence of `ptr`, but it set's all
+    // of it's bits to that of `field`
     (&mut ptr as *mut _ as *mut *const F).copy_from_nonoverlapping(&field, 1);
+
+    // the second copy should have the same providence as `ptr`, while pointing to field
     let ptr: *mut F = mem::transmute_copy(&ptr);
     &*(ptr as *mut Cell<F>)
 }
