@@ -119,7 +119,7 @@ macro_rules! cell_project {
                 let cell: &$crate::macros::Cell<$type> = cell;
                 let ptr = cell.as_ptr();
                 let $type { $field: field, .. } = &mut *ptr;
-                let field = field as *mut _;
+                let field: *mut _ = field;
                 let offset = (field as *const () as usize) - (ptr as *const () as usize);
                 $crate::macros::project_unchecked(cell, field, offset)
             },
