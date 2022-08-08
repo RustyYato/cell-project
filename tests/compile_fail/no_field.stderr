@@ -1,5 +1,13 @@
 error[E0026]: struct `Foo` does not have a field named `foo`
-  --> $DIR/no_field.rs:10:24
+  --> tests/compile_fail/no_field.rs:10:24
    |
 10 |     project!(Foo, cell.foo)
    |                        ^^^ struct `Foo` does not have this field
+
+error[E0609]: no field `foo` on type `Foo`
+  --> tests/compile_fail/no_field.rs:10:24
+   |
+10 |     project!(Foo, cell.foo)
+   |                        ^^^ unknown field
+   |
+   = note: available fields are: `bar`, `quax`

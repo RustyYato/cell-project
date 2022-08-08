@@ -6,19 +6,19 @@ use cell_project::cell_project as project;
 use std::cell::Cell;
 
 mod a {
-    #[derive(Debug, PartialEq)]
+    #[derive(Debug, PartialEq, Eq)]
     pub struct Foo {
         pub name: String,
         pub build: i32,
     }
 
-    #[derive(Debug, PartialEq)]
+    #[derive(Debug, PartialEq, Eq)]
     pub struct Bar<T: ?Sized> {
         pub name: String,
         pub build: T,
     }
 
-    #[derive(Debug, PartialEq)]
+    #[derive(Debug, PartialEq, Eq)]
     pub struct Quax<T, U> {
         pub name: String,
         pub build: T,
@@ -28,15 +28,15 @@ mod a {
 
 #[test]
 fn project_simple() {
-    let foo = Cell::new(a::Foo {
+    let cell = Cell::new(a::Foo {
         name: String::new(),
         build: 32,
     });
 
-    project!(a::Foo, foo.name).set("String".to_string());
+    project!(a::Foo, cell.name).set("String".to_string());
 
     assert_eq!(
-        Cell::into_inner(foo),
+        Cell::into_inner(cell),
         a::Foo {
             name: "String".to_string(),
             build: 32
