@@ -3,7 +3,7 @@ pub use core::{cell::Cell, mem, ptr};
 #[inline(always)]
 pub unsafe fn project_unchecked<T: ?Sized, F>(
     cell: &Cell<T>,
-    _: *const F,
+    _: *mut F,
     offset: usize,
 ) -> &Cell<F> {
     &*cell.as_ptr().cast::<u8>().add(offset).cast::<Cell<F>>()
@@ -13,7 +13,7 @@ pub unsafe fn project_unchecked<T: ?Sized, F>(
 #[cfg(feature = "nightly")]
 pub unsafe fn nightly_project_unchecked<T: ?Sized, F: ?Sized>(
     _: &Cell<T>,
-    field: *const F,
+    field: *mut F,
 ) -> &Cell<F> {
     &*(field as *const Cell<F>)
 }
